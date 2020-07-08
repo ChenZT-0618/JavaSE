@@ -61,6 +61,7 @@ public class CustomerView2 {
         Scanner scanner = new Scanner(System.in);
         System.out.println("---------------------删除客户---------------------");
         int index;
+
         while (true) {
             index = Integer.parseInt(scanner.nextLine());
             if (index == -1) {
