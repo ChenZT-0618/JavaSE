@@ -1,4 +1,4 @@
-package OOP.exer1;
+package Exercises.exer1;
 
 /**
  * @author ChenZT
