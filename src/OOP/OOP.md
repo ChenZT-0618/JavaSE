@@ -229,14 +229,18 @@ class Person{
 
 6. 多态的应用：抽象类、接口
 
-   抽象类或接口定义了一个方法，是某个目的的实现步骤，然后其子类或实现类根据这步骤得到各自的运行结果。
+   抽象类或接口定义了一个方法，是某个目的的实现步骤 ，然后其子类或实现类根据这步骤得到各自的运行结果。
 
 ### 接口
 
+##### interface
+
+##### implements
 
 
 
-### 面向对象关键字 
+
+### 其他面向对象关键字 
 ##### package
 
 * 为了更好的实现	项目中类的管理，提供包的概念
@@ -338,32 +342,176 @@ class Person{ // 定义Person类
 
 ##### static
 
+static 关键字可以用来修饰：属性、方法、内部类、代码块；
 
-
-##### extends
-
-##### super
-
-##### instanceof
-
-##### final
-
-##### abstract
-
-
-
-##### interface
-
-##### implements
+* 修饰属性——静态变量
+  *  如果创建了类的多个对象，多个对象共享同一个静态变量。当通过某一个对象修改静态变量时，会导致其他对象调用此静态变量时，是修改过了的。
+  * 静态变量随着类的加载而加载。可以通过"类.静态变量"的方式进行调用
+  * 静态变量的加载要早于对象的创建。
+  * 由于类只会加载一次，则静态变量在内存中也只会存在一份：存在方法区的静态域中。
+* 修饰方法——静态方法
+  * 随着类的加载而加载，可以通过"类.静态方法"的方式进行调用
+  * 静态方法中，只能调用静态的方法或属性，不能使用this关键字、super关键字
+* 注
+  * 如果属性是可以被多个对象所共享的，不会随着对象的不同而不同的。——设为静态变量
+  * 操作静态属性的方法——通常设为静态方法
+  * 工具类中的方法，习惯上声明为static的。 比如：Math、Arrays、Collections
 
 ### Object类
 
+Object 类是 Java 中所有类的始祖 ， 在 Java 中每个类都是由它扩展而来的。如果没有明确地指出超类，Object 就被认为是这个类的超类 。
+
+#### 常用方法：
+
+##### equals()
+
+Object 类中的 equals 方法用于检测一个对象是否等于另外一个对象。在Object类中，这个方法将判断两个对象是否具有相同的引用。
+
+**特性**：自反、对称、传递、一致
+
+- 重写equals()方法的建议：
+
+- 显式参数命名为 otherObject , 稍后需要将它转换成另一个叫做 other 的变量 。
+
+- 检测 this 与 otherObject 是否引用同一个对象 
+
+  ```java
+  if(this = otherObject) return true ;
+  ```
+
+- 检测otherObject是否为null,如果为null，返 回 false。 这项检测是很必要的 。
+
+  ```java
+  if(otherObject = null) return false ;
+  ```
+
+- 比较 this 与 otherObject 是否属于同一个类
+
+  -  如果 equals 的语义在每个子类中有所改变， 就使用 getClass 检测：
+
+    ```java
+    if (getClass() ! = otherObject.getCIass()) return false ;
+    ```
+
+  - 如果所有的子类都拥有统一的语义，就使用instanceof 检测 ：
+
+    ```java
+    if (!(otherObject instanceof ClassName)) return false ;
+    ```
+
+- 将 otherObject 转换为相应的类类型变量。
+
+  ```java
+  ClassName other = (ClassName)otherObject
+  ```
+
+- 现在开始对所有需要比较的域进行比较了。使用 = 比较基本类型域，使用 equals 比较对象域.如果所有的域都匹配，就返回true；否 则 返 回 false。
+
+##### toString()
+
+ 它用于返回表示对象值的字符串
+
+##### hashCode()
+
+散列码(hash code)是由对象导出的一个整型值。 散列码是没有规律的 。
+
+Object 类的默认 hashCode 方法是对象的存储地址。
+
+**如果重新定义 equals 方法，就必须重新定义hashCode 方法，以便用户可以将对象插入到散列表中**
+
+##### getClass()
+
+返回一个对象所属的类 
+
+### 包装类(Wrapper)
+
+ 针对八种基本数据类型定义相应的引用类型—包装类
+
+#### 包装类的使用
+
+* 基本数据类型包装成包装类的实例 --- 装箱
+  * 通过包装类的构造器实现：int i = 500; Integer t = new Integer(i);  
+  * 通过字符串参数构造包装类对象：
+    * Float f = new Float(“4.56”)    
+    * Long l = new Long(“asdf”); //NumberFormatException  
+* 获得 包装类对象中包装的基本类型变量 --- 拆箱
+  * 调用包装类的.xxxValue()方法：  
+    * boolean b = Obj.booleanValue();
+
+- JDK1.5之后，支持自动装箱，自动拆箱。但类型必须匹配。
 
 
+#### 包装类与String类间的转换
 
+- 通过包装类Integer.toString()将整型转换为字符串；  
+- 通过Integer.parseInt()将字符串转换为int类型；  
 
-### Wrapper包装类
+包装类面试题：
 
+```java
+public void test() {
+    Integer m = 1;
+    Integer n = 1;
+    System.out.println(m == n); // ture
 
+    Integer i = 128;
+    Integer j = 128;
+    System.out.println(i == j); // false
+}
+public void test1() {
+    Object o1 = true ? new Integer(1) : new Double(2.0);
+    System.out.println(o1);// 1.0
+    // 三元运算符 ? : 类型要一致
+}
+```
 
+原因：
+
+Integer内部定义了IntegerCache结构，IntegerCache中定义了Integer[]，保存了从-128~127范围的整数。
+
+如果我们使用自动装箱的方式，给Integer赋值的范围在-128~127范围内时，可以直接使用数组中的元素，不用再去new了。目的：提高效率
+
+源码：
+
+```java
+public static Integer valueOf(int i) {
+    if (i >= IntegerCache.low && i <= IntegerCache.high)
+        return IntegerCache.cache[i + (-IntegerCache.low)];
+    return new Integer(i);
+}
+
+private static class IntegerCache {
+    static final int low = -128;
+    static final int high;
+    static final Integer cache[];
+
+    static {
+        // high value may be configured by property
+        int h = 127;
+        String integerCacheHighPropValue =
+            sun.misc.VM.getSavedProperty("java.lang.Integer.IntegerCache.high");
+        if (integerCacheHighPropValue != null) {
+            try {
+                int i = parseInt(integerCacheHighPropValue);
+                i = Math.max(i, 127);
+                // Maximum array size is Integer.MAX_VALUE
+                h = Math.min(i, Integer.MAX_VALUE - (-low) -1);
+            } catch( NumberFormatException nfe) {
+                // If the property cannot be parsed into an int, ignore it.
+            }
+        }
+        high = h;
+
+        cache = new Integer[(high - low) + 1];
+        int j = low;
+        for(int k = 0; k < cache.length; k++)
+            cache[k] = new Integer(j++);
+
+        // range [-128, 127] must be interned (JLS7 5.1.7)
+        assert IntegerCache.high >= 127;
+    }
+
+    private IntegerCache() {}
+}
+```
 
