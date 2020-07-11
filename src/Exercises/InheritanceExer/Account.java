@@ -1,4 +1,4 @@
-package Exercises.exer1;
+package Exercises.InheritanceExer;
 
 /**
  * @author ChenZT

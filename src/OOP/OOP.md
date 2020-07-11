@@ -170,16 +170,6 @@ class Son extends Father {
 */
 ```
 
-
-
-
-
-
-
-
-
-
-
 ##### 内部类
 
 ### 面向对象三大特征
@@ -224,7 +214,7 @@ class Son extends Father {
 
 关键字extends表明正在构造的新类派生于一个已存在的类。已存在的类称为超类、父类；新类成为子类、派生类。
 
-##### 与继承相关的关键字：extends、super、instanceof、final、abstract
+##### 与继承相关的关键字
 
 1. extends：继承专用语法
 
@@ -318,13 +308,168 @@ class Son extends Father {
 
    抽象类或接口定义了一个方法，是某个目的的实现步骤 ，然后其子类或实现类根据这步骤得到各自的运行结果。
 
-### 接口
+### 接口：抽象方法和常量值定义的集合。
 
-##### interface
+接口就是规范，定义的是一组规则。接口的本质是契约，标准，规范，就像我们的法律一样。制定好后大家都
+要遵守。
 
-##### implements
+#### 特点：
 
+* 用interface来定义。用implements来实现使用。
+* 接口中的所有成员变量都默认是由public static final修饰的。
+* 接口中的所有抽象方法都默认是由public abstract修饰的。
+* **接口中没有构造器。**——不可以实例化
 
+```java
+interface Flyable {
+    int MAX_SPEED = 7990;
+
+    void fly();
+
+    void stop();
+}
+
+interface Attackable {
+
+    void attack();
+
+}
+
+class Plane implements Flyable, Attackable { // 多继承
+    @Override
+    public void fly() {
+        System.out.println("起飞");
+    }
+
+    @Override
+    public void stop() {
+        System.out.println("降落");
+    }
+
+    @Override
+    public void attack() {
+        System.out.println("攻击");
+    }
+}
+```
+
+* 接口与接口之间可以继承，而且可以多继承。
+
+```java
+interface AA{
+	void method1();
+}
+interface BB{
+	void method2();
+}
+interface CC extends AA,BB{
+	
+}
+```
+
+* 接口的使用体现**多态性**
+
+```java
+public class InterfaceTest2 {
+    public static void main(String[] args) {
+        InterfaceTest2 it = new InterfaceTest2();
+        Dog dog = new Dog();
+        Cat cat = new Cat();
+        it.fun1(dog);
+        it.fun1(cat);
+    }
+
+    public void fun1(Animal animal) {
+        animal.eat();
+    }
+}
+
+interface Animal {
+    void eat();
+}
+
+class Dog implements Animal {
+    @Override
+    public void eat() {
+        System.out.println("狗吃肉");
+    }
+}
+
+class Cat implements Animal {
+    @Override
+    public void eat() {
+        System.out.println("猫吃鱼");
+    }
+}
+```
+
+- JDK8中除了定义全局常量和抽象方法之外，还可以定义静态方法、默认方法
+  - 接口中定义的静态方法，只能通过接口来调用。
+
+  * 默认方法的一个重要用处是”接口演化“——如果一个接口增加了新方法，则需要修改所有实现该接口的类从而实现该方法，不然不能运行。那么将该新方法设为默认方法则可以通过编译
+  * 如果子类(或实现类)继承的父类和实现的接口中声明了同名同参数的默认方法，那么子类在没有重写此方法的情况下，默认调用的是父类中的同名同参数的方法。-->类优先原则
+  * 如果实现类实现了多个接口，而这多个接口中定义了同名同参数的默认方法，
+    * 那么在实现类没有重写此方法的情况下，报错。-->接口冲突。
+    * 需要我们必须在实现类中重写此方法
+
+```java
+interface Animal {
+    void eat();
+
+    // 默认方法
+    default void method1() {
+        System.out.println("默认方法");
+    }
+
+    // 静态方法
+    static void method2() {
+        System.out.println("静态方法");
+    }
+}
+```
+
+#### lambda表达式
+
+#### 函数式接口
+
+对于**只有一个抽象方法**的接口，需要这种接口的对象时，就可以提供一个lambda表达式。 这种接口称为函数式接口(functional interface)。可用注解@FunctionalInterface表示。
+
+```java
+@FunctionalInterface
+interface test {
+    void speak(String message);
+}
+```
+
+#####  java8新增的函数式接口
+
+|接口	|参数类型	|返回类型|	方法	|用途|
+|---|---|---|---|---|
+|Consumer	|T	|void|	void accept(T t)	|对类型T参数操作，无返回结果|
+|Supplier|	无	|T| T get() |创造T类型参数|
+|Function	|T| R        | R apply(T t) | 对类型T参数操作，返回R类型参数      |
+|Predicate|	T| boolean  | boolean test(T t) | 断言型接口，对类型T进行条件筛选操作 |
+
+```java
+public void test(double money, Consumer<Double> con) {
+    con.accept(money);
+}
+
+@Test
+public void test1() {
+    double money = 10000;
+    test(money, m -> System.out.println("消费了" + m + "元"));
+    // 方法引用
+    test(money, System.out::println); // 10000.0
+}
+
+```
+
+##### 方法引用
+
+把某个现成的方法或者一个类的构造器作为一个对象、参数传递给别人使用——类似于lambda表达式的作用。
+
+用 :: 操作符分隔方法名与对象或类名
 
 
 ### 其他面向对象关键字 
