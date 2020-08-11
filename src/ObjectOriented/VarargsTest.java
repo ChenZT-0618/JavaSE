@@ -1,6 +1,8 @@
-package OOP;
+package ObjectOriented;
 
 /**
+ * Java函数参数可以传多个参数，按数组那样使用增强for循环遍历即可。
+ *
  * @author ChenZT
  */
 public class VarargsTest {

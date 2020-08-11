@@ -8,6 +8,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
+ * 字节流文件操作
+ * <p>
  * 测试FileInputStream和FileOutputStream的使用
  * 结论：
  * 1. 对于文本文件(.txt,.java,.c,.cpp)，使用字符流处理
@@ -33,7 +35,7 @@ public class StreamTest {
         int len;
         while ((len = fis.read(bytes)) != -1) {
             fos.write(bytes, 0, len);
-            
+
         }
         fis.close();
         fos.close();

@@ -1,4 +1,4 @@
-package OOP.StaticKeyWord;
+package ObjectOriented.StaticKeyWord;
 
 /**
  * @author ChenZT

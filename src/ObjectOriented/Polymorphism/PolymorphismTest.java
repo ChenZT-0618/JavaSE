@@ -1,4 +1,4 @@
-package OOP.Polymorphism;
+package ObjectOriented.Polymorphism;
 
 import org.junit.Test;
 

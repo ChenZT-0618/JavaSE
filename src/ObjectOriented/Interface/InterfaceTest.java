@@ -1,4 +1,4 @@
-package OOP.Interface;
+package ObjectOriented.Interface;
 
 /**
  * @author ChenZT

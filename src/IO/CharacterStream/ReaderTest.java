@@ -9,6 +9,7 @@ import java.io.IOException;
 
 /**
  * @author ChenZT
+ * 字符型文件的操作
  * 1.File类的实例化
  * 2.FileReader流的实例化
  * 3.读入的操作

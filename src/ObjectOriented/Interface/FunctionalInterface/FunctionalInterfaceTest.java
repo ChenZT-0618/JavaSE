@@ -1,4 +1,4 @@
-package OOP.Interface.FunctionalInterface;
+package ObjectOriented.Interface.FunctionalInterface;
 
 import org.junit.Test;
 

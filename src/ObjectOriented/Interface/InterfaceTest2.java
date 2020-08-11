@@ -1,4 +1,4 @@
-package OOP.Interface;
+package ObjectOriented.Interface;
 
 /**
  * @author ChenZT
@@ -12,7 +12,7 @@ public class InterfaceTest2 {
         it.fun1(dog);
         it.fun1(cat);
         dog.method1();
-        
+
     }
 
     public void fun1(Animal animal) {
